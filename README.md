@@ -15,8 +15,8 @@ Pastikan Anda telah menginstal perangkat berikut sebelum memulai:
 1. **Clone repository ini:**
 
     ```bash
-    git clone https://github.com/username/nama-aplikasi.git
-    cd nama-aplikasi
+    git clone https://github.com/hilmanm011/frontend-library-app
+    cd frontend-library-app
     ```
 
 2. **Instal dependensi:**
