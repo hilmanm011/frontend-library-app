@@ -44,6 +44,12 @@ const Navbar = () => {
                 History Peminjaman
               </NavLink>
             </li>
+
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/report-peminjaman">
+                Laporan Peminjaman
+              </NavLink>
+            </li>
           </ul>
         </div>
       </nav>

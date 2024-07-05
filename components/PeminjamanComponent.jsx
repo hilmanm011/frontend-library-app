@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import moment from 'moment'
 import { useEffect, useState } from 'react';
-import { Table, Button, Modal, Form } from 'react-bootstrap';
+import { Table, Button, Modal, Form, Badge } from 'react-bootstrap';
 import Stack from 'react-bootstrap/Stack';
 
 import axios from 'axios';
@@ -24,6 +24,10 @@ const PeminjamanComponent = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const limit = 5; // Number of items per page
+
+    const [formSearch, setFormSeach] = useState({
+        sfilter_search: '',
+    })
 
     const handleShow = () => setShowModal(true);
     const handleClose = () => setShowModal(false);
@@ -71,7 +75,8 @@ const PeminjamanComponent = () => {
 
     const getDataList = async () => {
         try {
-            const response = await axios.get(`${BASE_URL_PEMINJAMAN}?limit=${limit}&page=${currentPage}`);
+            const sfilterSearchParam = formSearch.sfilter_search ? `&sfilter_search=${formSearch.sfilter_search}` : '';
+            const response = await axios.get(`${BASE_URL_PEMINJAMAN}?limit=${limit}&page=${currentPage}${sfilterSearchParam}`);
             setData(response.data.data);
             setTotalPages(Math.ceil(response.data.total / limit));
         } catch (error) {
@@ -103,19 +108,36 @@ const PeminjamanComponent = () => {
         setCurrentPage(page);
     };
 
+    const handleInputChangeSearch = (e) => {
+        const { name, value } = e.target;
+        setFormSeach({ ...formSearch, [name]: value });
+    };
+
     useEffect(() => {
         getDataList();
         fetchAvailableBooks();
         fetchAvailableMahasiswa()
-    }, [currentPage]);
+    }, [currentPage, formSearch]);
 
     return (
         <div>
-            <Button variant="primary" onClick={handleShow} className="mb-3">
-                Tambah Peminjaman
-            </Button>
+            <div className="d-flex justify-content-between align-items-center">
+                <Button variant="primary" onClick={handleShow} className="mb-3">
+                    Tambah Peminjaman
+                </Button>
+                <div className='col-md-4'>
+                    <Form.Control
+                        type="text"
+                        name="sfilter_search"
+                        placeholder='Pencarian...'
+                        value={formSearch.sfilter_search}
+                        onChange={handleInputChangeSearch}
+                        required
+                    />
+                </div>
+            </div>
 
-            <Table striped bordered hover>
+            <Table hover>
                 <thead>
                     <tr>
                         <th>#</th>
@@ -131,7 +153,13 @@ const PeminjamanComponent = () => {
                             <td>{index + 1}</td>
                             <td>{item.mhs_nim}</td>
                             <td>{item.mhs_nama}</td>
-                            <td>{item.pmj_statuspengembalian}</td>
+                            <td>
+                                {item.pmj_statuspengembalian === 'Y' ? (
+                                    <Badge bg="success">Selesai</Badge>
+                                ) : (
+                                    <Badge bg="warning">Dalam Peminjaman</Badge>
+                                )}
+                            </td>
                             <td>{moment(item.pmj_tglpeminjaman).format('DD MMMM YYYY')}</td>
                         </tr>
                     ))}

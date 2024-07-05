@@ -5,6 +5,7 @@ import MahasiswaComponent from "../components/MahasiswaComponent"
 import PeminjamanComponent from "../components/PeminjamanComponent"
 import InventoryComponent from "../components/InventoryComponent"
 import HisPeminjamanComponent from "../components/HisPeminjamanComponent"
+import ReportComponent from "../components/ReportComponent"
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
           <Route path="/peminjaman" element={<PeminjamanComponent />} />
           <Route path="/inventory" element={<InventoryComponent />} />
           <Route path="/history-peminjaman" element={<HisPeminjamanComponent />} />
+          <Route path="/report-peminjaman" element={<ReportComponent />} />
       </Routes>
     </div>
   </BrowserRouter>

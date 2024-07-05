@@ -78,7 +78,7 @@ const HisPeminjamanComponent = () => {
                         </Form.Control>
                     </Form.Group>
 
-                    <Stack direction="horizontal" gap={3}>
+                    <Stack direction="horizontal" gap={3} className='d-flex align-items-end'>
                         <div className="p-2">
                             <Form.Label className='fw-bold small'>Dari Tanggal</Form.Label>
                             <Form.Control
@@ -109,7 +109,7 @@ const HisPeminjamanComponent = () => {
                 </div>
             </div>
 
-            <Table striped bordered hover>
+            <Table hover>
                 <thead>
                     <tr>
                         <th>#</th>

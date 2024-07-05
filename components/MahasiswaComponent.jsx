@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 import { Table, Button, Modal, Form, Badge, Stack } from 'react-bootstrap';
 import axios from 'axios';
@@ -16,6 +17,10 @@ const MahasiswaComponent = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const limit = 5; // Number of items per page
+
+    const [formSearch, setFormSeach] = useState({
+        sfilter_search: '',
+    })
 
     const handleShow = () => setShowModal(true);
     const handleClose = () => setShowModal(false);
@@ -44,7 +49,8 @@ const MahasiswaComponent = () => {
 
     const getDataList = async (page = 1) => {
         try {
-            const response = await axios.get(`${BASE_URL_MAHASISWA}?page=${page}&limit=${limit}`);
+            const sfilterSearchParam = formSearch.sfilter_search ? `&sfilter_search=${formSearch.sfilter_search}` : '';
+            const response = await axios.get(`${BASE_URL_MAHASISWA}?limit=${limit}&page=${page}${sfilterSearchParam}`);
             setData(response.data.data);
             setTotalPages(Math.ceil(response.data.total / limit));
         } catch (error) {
@@ -52,9 +58,14 @@ const MahasiswaComponent = () => {
         }
     };
 
+    const handleInputChangeSearch = (e) => {
+        const { name, value } = e.target;
+        setFormSeach({ ...formSearch, [name]: value });
+    };
+
     useEffect(() => {
         getDataList(currentPage);
-    }, [currentPage]);
+    }, [currentPage, formSearch]);
 
     const handlePageChange = (page) => {
         setCurrentPage(page);
@@ -62,11 +73,24 @@ const MahasiswaComponent = () => {
 
     return (
         <div>
-            <Button variant="primary" onClick={handleShow} className='mb-3'>
-                Tambah Mahasiswa
-            </Button>
+            
+            <div className="d-flex justify-content-between align-items-center">
+                <Button variant="primary" onClick={handleShow} className='mb-3'>
+                    Tambah Mahasiswa
+                </Button>
+                <div className='col-md-4'>
+                    <Form.Control
+                        type="text"
+                        name="sfilter_search"
+                        placeholder='Pencarian...'
+                        value={formSearch.sfilter_search}
+                        onChange={handleInputChangeSearch}
+                        required
+                    />
+                </div>
+            </div>
 
-            <Table striped bordered hover>
+            <Table hover>
                 <thead>
                     <tr>
                         <th>#</th>

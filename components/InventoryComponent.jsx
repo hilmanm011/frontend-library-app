@@ -21,6 +21,10 @@ const InventoryComponent = () => {
     const [totalPages, setTotalPages] = useState(1);
     const limit = 5; // Number of items per page
 
+    const [formSearch, setFormSeach] = useState({
+        sfilter_search: '',
+    })
+
     const handleShow = () => setShowModal(true);
     const handleClose = () => setShowModal(false);
 
@@ -47,7 +51,8 @@ const InventoryComponent = () => {
     };
 
     const getDataList = async () => {
-        const response = await axios.get(`${BASE_URL_INVENTORY}?limit=${limit}&page=${currentPage}`);
+        const sfilterSearchParam = formSearch.sfilter_search ? `&sfilter_search=${formSearch.sfilter_search}` : '';
+        const response = await axios.get(`${BASE_URL_INVENTORY}?limit=${limit}&page=${currentPage}${sfilterSearchParam}`);
         setTotalPages(Math.ceil(response.data.total / limit));
         setData(response.data.data);
     };
@@ -61,18 +66,35 @@ const InventoryComponent = () => {
         setCurrentPage(page);
     };
 
+    const handleInputChangeSearch = (e) => {
+        const { name, value } = e.target;
+        setFormSeach({ ...formSearch, [name]: value });
+    };
+
     useEffect(() => {
         getDataList();
         getBukuList();
-    }, [currentPage]);
+    }, [currentPage, formSearch]);
 
     return (
         <div>
-            <Button variant="primary" onClick={handleShow} className='mb-3'>
-                Tambah Inventory
-            </Button>
+            <div className="d-flex justify-content-between align-items-center">
+                <Button variant="primary" onClick={handleShow} className='mb-3'>
+                    Tambah Inventory
+                </Button>
+                <div className='col-md-4'>
+                    <Form.Control
+                        type="text"
+                        name="sfilter_search"
+                        placeholder='Pencarian...'
+                        value={formSearch.sfilter_search}
+                        onChange={handleInputChangeSearch}
+                        required
+                    />
+                </div>
+            </div>
 
-            <Table striped bordered hover>
+            <Table hover>
                 <thead>
                     <tr>
                         <th>#</th>

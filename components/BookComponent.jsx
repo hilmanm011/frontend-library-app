@@ -19,12 +19,20 @@ const BookComponent = () => {
     const [totalPages, setTotalPages] = useState(1);
     const limit = 5; // Number of items per page
 
+    const [formSearch, setFormSeach] = useState({
+        sfilter_search: '',
+    })
+
     const handleShow = () => setShowModal(true);
     const handleClose = () => setShowModal(false);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
+    };
+    const handleInputChangeSearch = (e) => {
+        const { name, value } = e.target;
+        setFormSeach({ ...formSearch, [name]: value });
     };
 
     const handleSubmit = async (e) => {
@@ -47,7 +55,8 @@ const BookComponent = () => {
 
     const getDataList = async () => {
         try {
-            const response = await axios.get(`${BASE_URL_BOOK}?limit=${limit}&page=${currentPage}`);
+            const sfilterSearchParam = formSearch.sfilter_search ? `&sfilter_search=${formSearch.sfilter_search}` : '';
+            const response = await axios.get(`${BASE_URL_BOOK}?limit=${limit}&page=${currentPage}${sfilterSearchParam}`);
             setData(response.data.data);
             setTotalPages(Math.ceil(response.data.total / limit));
         } catch (error) {
@@ -55,21 +64,34 @@ const BookComponent = () => {
         }
     };
 
+
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
 
     useEffect(() => {
         getDataList();
-    }, [currentPage]); // Fetch data when currentPage changes
+    }, [currentPage, formSearch]); // Fetch data when currentPage changes
 
     return (
         <div>
-            <Button variant="primary" onClick={handleShow} className="mb-3">
-                Tambah Buku
-            </Button>
+            <div className="d-flex justify-content-between align-items-center">
+                <Button variant="primary" onClick={handleShow} className="mb-3">
+                    Tambah Buku
+                </Button>
+                <div className='col-md-4'>
+                    <Form.Control
+                        type="text"
+                        name="sfilter_search"
+                        placeholder='Pencarian...'
+                        value={formSearch.sfilter_search}
+                        onChange={handleInputChangeSearch}
+                        required
+                    />
+                </div>
+            </div>
 
-            <Table striped bordered hover>
+            <Table hover>
                 <thead>
                     <tr>
                         <th>#</th>
