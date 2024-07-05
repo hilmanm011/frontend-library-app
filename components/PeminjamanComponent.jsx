@@ -73,6 +73,18 @@ const PeminjamanComponent = () => {
         }
     };
 
+    const handleToggle = async (id) => {
+        try {
+            // Assuming the API expects a PUT request with the status in the request body
+            await axios.patch(`${BASE_URL_PEMINJAMAN}/${id}/status`, { pmj_statuspengembalian: "Y" });
+
+            // Update the local state after successful API call
+            getDataList();
+        } catch (error) {
+            console.error('Error updating status:', error);
+        }
+    };
+
     const getDataList = async () => {
         try {
             const sfilterSearchParam = formSearch.sfilter_search ? `&sfilter_search=${formSearch.sfilter_search}` : '';
@@ -145,6 +157,7 @@ const PeminjamanComponent = () => {
                         <th>Nama Mahasiswa</th>
                         <th>Status</th>
                         <th>Tanggal Peminjaman</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -161,6 +174,17 @@ const PeminjamanComponent = () => {
                                 )}
                             </td>
                             <td>{moment(item.pmj_tglpeminjaman).format('DD MMMM YYYY')}</td>
+                            <td>
+                                <Button
+                                    variant={item.pmj_statuspengembalian === 'Y' ? 'secondary' : 'primary'}
+                                    size='sm'
+                                    disabled={item.pmj_statuspengembalian === 'Y'}
+                                    onClick={()=> handleToggle(item.pmj_id)}
+                                    className="mb-3"
+                                >
+                                    {item.pmj_statuspengembalian === 'Y' ? 'Buku Sudah Dikembalikan' : 'Selesaikan'}
+                                </Button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>

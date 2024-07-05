@@ -60,99 +60,120 @@ const ReportComponent = () => {
 
     return (
         <div>
-            <div className="row mb-3">
-                <div className="col-md-6">
-                    <Form.Group controlId="formFilters">
-                        <Stack direction="horizontal" gap={3} className="mb-3">
-                            <Form.Label className='fw-bold small col-form-label col-md-3'>NIM</Form.Label>
-                            <Form.Control
-                                className="col-md-9"
-                                type="text"
-                                name="sfilter_mhs_nim"
-                                value={filters.sfilter_mhs_nim}
-                                onChange={handleFilterChange}
-                            />
-                        </Stack>
-                        <Stack direction="horizontal" gap={3} className="mb-3">
-                            <Form.Label className='fw-bold small col-form-label col-md-3'>Nama</Form.Label>
-                            <Form.Control
-                                className="col-md-9"
-                                type="text"
-                                name="sfilter_mhs_nama"
-                                value={filters.sfilter_mhs_nama}
-                                onChange={handleFilterChange}
-                            />
-                        </Stack>
-                        <Stack direction="horizontal" gap={3} className="mb-3">
-                            <Form.Label className='fw-bold small col-form-label col-md-3'>Status</Form.Label>
-                            <Form.Control
-                                className="col-md-9"
-                                as="select"
-                                name="sfilter_pmj_statuspengembalian"
-                                value={filters.sfilter_pmj_statuspengembalian}
-                                onChange={handleFilterChange}
-                            >
-                                <option value="">Pilih Status</option>
-                                <option value="Y">Selesai</option>
-                                <option value="N">Dalam Peminjaman</option>
-                            </Form.Control>
-                        </Stack>
-                        <Stack direction="horizontal" gap={3} className="mb-3">
-                            <Form.Label className='fw-bold small col-form-label col-md-3'>Lama Pinjam (hari)</Form.Label>
-                            <Form.Control
-                                className="col-md-9"
-                                type="number"
-                                name="sfilter_lama_pinjam_hari"
-                                value={filters.sfilter_lama_pinjam_hari}
-                                onChange={handleFilterChange}
-                            />
-                        </Stack>
-                        <Stack direction="horizontal" gap={3} className="mb-3">
-                            <Form.Label className='fw-bold small col-form-label col-md-3'>Judul Buku</Form.Label>
-                            <Form.Control
-                                className="col-md-9"
-                                type="text"
-                                name="sfilter_buk_judul"
-                                value={filters.sfilter_buk_judul}
-                                onChange={handleFilterChange}
-                            />
-                        </Stack>
-                        <Stack direction="horizontal" gap={3} className="mb-3">
-                            <Form.Label className='fw-bold small col-form-label col-md-3'>Tanggal Peminjaman</Form.Label>
-                            <Form.Control
-                                className="col-md-9"
-                                type="date"
-                                name="sfilter_pmj_tglpeminjaman"
-                                value={filters.sfilter_pmj_tglpeminjaman}
-                                onChange={handleFilterChange}
-                            />
-                        </Stack>
-                        <Stack direction="horizontal" gap={3} className="mb-3">
-                            <Form.Label className='fw-bold small col-form-label col-md-3'>Tanggal Pengembalian</Form.Label>
-                            <Form.Control
-                                className="col-md-9"
-                                type="date"
-                                name="sfilter_pmj_tglpengembalian"
-                                value={filters.sfilter_pmj_tglpengembalian}
-                                onChange={handleFilterChange}
-                            />
-                        </Stack>
-                        <Stack direction="horizontal" gap={3} className="mb-3">
-                            <Form.Label className='fw-bold small col-form-label col-md-3'>ID Buku</Form.Label>
-                            <Form.Control
-                                className="col-md-9"
-                                type="text"
-                                name="sfilter_buk_id"
-                                value={filters.sfilter_buk_id}
-                                onChange={handleFilterChange}
-                            />
-                        </Stack>
-                    </Form.Group>
+            <div className="mb-3">
+                <div className="row">
+                    <div className='col-md-6'>
+                        <Form.Label className='fw-bold small col-form-label col-md-6'>NIM</Form.Label>
+                        <Form.Control
+                            className="col-md-9"
+                            type="text"
+                            name="sfilter_mhs_nim"
+                            value={filters.sfilter_mhs_nim}
+                            onChange={handleFilterChange}
+                            size="sm"
+                            placeholder='Cari berdasarkan NIM mahasiswa'
+                        />
+                    </div>
+                    <div className='col-md-6'>
+                        <Form.Label className='fw-bold small col-form-label col-md-6'>Nama</Form.Label>
+                        <Form.Control
+                            className="col-md-9"
+                            type="text"
+                            name="sfilter_mhs_nama"
+                            value={filters.sfilter_mhs_nama}
+                            onChange={handleFilterChange}
+                            size="sm"
+                            placeholder='Cari berdasarkan nama mahasiswa'
+                        />
+                    </div>
+                </div>
+                <div className="row">
+                    <div className='col-md-6'>
+                        <Form.Label className='fw-bold small col-form-label col-md-6'>Status</Form.Label>
+                        <Form.Control
+                            className="col-md-9"
+                            as="select"
+                            name="sfilter_pmj_statuspengembalian"
+                            value={filters.sfilter_pmj_statuspengembalian}
+                            onChange={handleFilterChange}
+                            size="sm"
+                            placeholder='Cari berdasarkan status'
+                        >
+                            <option value="">Pilih Status</option>
+                            <option value="Y">Selesai</option>
+                            <option value="N">Dalam Peminjaman</option>
+                        </Form.Control>
+                    </div>
+                    <div className='col-md-6'>
+                        <Form.Label className='fw-bold small col-form-label col-md-6'>Lama Pinjam (hari)</Form.Label>
+                        <Form.Control
+                            className="col-md-9"
+                            type="number"
+                            name="sfilter_lama_pinjam_hari"
+                            value={filters.sfilter_lama_pinjam_hari}
+                            onChange={handleFilterChange}
+                            size="sm"
+                            placeholder='Cari berdasarkan lama pinjam'
+                        />
+                    </div>
+                </div>
+                <div className="row">
+                    <div className='col-md-6'>
+                        <Form.Label className='fw-bold small col-form-label col-md-6'>Judul Buku</Form.Label>
+                        <Form.Control
+                            className="col-md-9"
+                            type="text"
+                            name="sfilter_buk_judul"
+                            value={filters.sfilter_buk_judul}
+                            onChange={handleFilterChange}
+                            size="sm"
+                            placeholder='Cari berdasarkan judul buku'
+                        />
+                    </div>
+                    <div className='col-md-6'>
+                        <Form.Label className='fw-bold small col-form-label col-md-6'>Tanggal Peminjaman</Form.Label>
+                        <Form.Control
+                            className="col-md-9"
+                            type="date"
+                            name="sfilter_pmj_tglpeminjaman"
+                            value={filters.sfilter_pmj_tglpeminjaman}
+                            onChange={handleFilterChange}
+                            size="sm"
+                            placeholder='Cari berdasarkan tanggal peminjaman'
+                        />
+                    </div>
+                </div>
+                <div className="row">
+                    <div className='col-md-6'>
+                        <Form.Label className='fw-bold small col-form-label col-md-6'>Tanggal Pengembalian</Form.Label>
+                        <Form.Control
+                            className="col-md-9"
+                            type="date"
+                            name="sfilter_pmj_tglpengembalian"
+                            value={filters.sfilter_pmj_tglpengembalian}
+                            onChange={handleFilterChange}
+                            size="sm"
+                            placeholder='Cari berdasarkan tanggal pengembalian'
+                        />
+                    </div>
+                    <div className='col-md-6'>
+                        <Form.Label className='fw-bold small col-form-label col-md-6'>ID Buku</Form.Label>
+                        <Form.Control
+                            className="col-md-9"
+                            type="text"
+                            name="sfilter_buk_id"
+                            value={filters.sfilter_buk_id}
+                            onChange={handleFilterChange}
+                            size="sm"
+                            placeholder='Cari berdasarkan ID buku'
+                        />
+                    </div>
                 </div>
             </div>
 
 
-            <Table hover>
+
+            <Table bordered hover className='mt-4'>
                 <thead>
                     <tr>
                         <th>#</th>
@@ -194,6 +215,7 @@ const ReportComponent = () => {
                     ))}
                 </tbody>
             </Table>
+
 
             <div className="pagination d-flex justify-content-end">
                 <Stack direction="horizontal" gap={3}>
